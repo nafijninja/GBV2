@@ -16,33 +16,14 @@ module.exports = function (checkAuthConfigDashboardOfThread) {
 			return next();
 		},
 
+		// Skip Facebook ID verification
 		isVeryfiUserIDFacebook(req, res, next) {
-			if (req.user?.facebookUserID)
-				return next();
-
-			if (isPostMethod(req))
-				return res.status(401).send({
-					status: "error",
-					error: "PERMISSION_DENIED",
-					message: "Bạn chưa xác thực id Facebook"
-				});
-
-			req.flash("errors", { msg: "Bạn cần phải xác thực id facebook trước khi thực hiện hành động này" });
-			res.redirect(`/verifyfbid?redirect=${req.originalUrl}`);
+			return next();
 		},
 
+		// Skip waitVerifyAccount check
 		isWaitVerifyAccount(req, res, next) {
-			if (req.session?.waitVerifyAccount)
-				return next();
-
-			if (isPostMethod(req))
-				return res.status(401).send({
-					status: "error",
-					error: "PERMISSION_DENIED",
-					message: "Đã xảy ra lỗi, vui lòng thử lại"
-				});
-
-			res.redirect("/register");
+			return next();
 		},
 
 		async checkHasAndInThread(req, res, next) {
