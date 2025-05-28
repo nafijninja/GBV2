@@ -1,8 +1,8 @@
 <%~ includeFile("partials/header.eta", { user: user }); %>
 <%~ includeFile("partials/message.eta"); %>
 <%~ includeFile("partials/title.eta", {
-  icon: "fas fa-cog",
-  title: "Dashboard"
+	icon: "fas fa-cog",
+	title: "Dashboard"
 }); %>
 
 <style>
@@ -13,7 +13,7 @@
 
 <div class="container">
 
-  <h3>List of groups you manage</h3>
+  <h3>List of Groups You Manage</h3>
 
   <div class="d-sm-flex d-block align-items-center my-3">
     <div class="search-box me-2">
@@ -43,22 +43,27 @@
           <th>Action</th>
         </tr>
       </thead>
-
       <tbody class="list">
-        <% for (let i = 0; i < threads.length; i++) { 
-             const thread = threads[i];
-             const threadID = thread.threadID || "Unknown ID";
-             const threadName = thread.threadName || "Unnamed Group";
-             const members = Array.isArray(thread.members) ? thread.members : [];
-             const memberCount = members.filter(m => m.inGroup).length;
-        %>
+        <% for (let i = 0; i < threads.length; i++) { %>
         <tr>
-          <td class="ps-2"><%= i + 1 %></td>
-          <td class="thread_id"><%= threadID %></td>
-          <td class="thread_name"><%= threadName %></td>
-          <td class="members"><%= memberCount %></td>
+          <td class="ps-2">
+            <%= i + 1 %>
+          </td>
+          <td class="thread_id">
+            <%= threads[i].threadID %>
+          </td>
+          <td class="thread_name">
+            <%= threads[i].threadName || "null" %>
+          </td>
+          <td class="members">
+            <% if (Array.isArray(threads[i].members)) { %>
+              <%= threads[i].members.filter(m => m.inGroup).length %>
+            <% } else { %>
+              0
+            <% } %>
+          </td>
           <td>
-            <a href='/dashboard/<%= threadID %>' class='btn btn-phoenix-primary'>
+            <a href="/dashboard/<%= threads[i].threadID %>" class="btn btn-phoenix-primary">
               <i class="fa-solid fa-wrench"></i>
             </a>
           </td>
@@ -82,7 +87,7 @@
     const searchInput = $("#search-input");
     const searchBy = $("#searchBy");
 
-    $("#search-input, #searchBy").on("keyup change paste", function() {
+    $("#search-input, #searchBy").on("keyup change paste", function () {
       const searchValue = searchInput.val();
       const searchByValue = searchBy.val();
       if (searchByValue)
@@ -91,10 +96,12 @@
         listThread.search();
     });
 
-    resetButton.on("click", function() {
+    resetButton.on("click", function () {
       searchInput.val("");
       listThread.search();
     });
   </script>
 
-<%~ includeFile("partials/footer.eta") %>
+</div>
+
+<%~ includeFile("partials/footer.eta"); %>
