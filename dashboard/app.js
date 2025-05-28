@@ -105,6 +105,11 @@ module.exports = async (api) => {
 		useWith: true
 	});
 
+
+const aboutNafijRoute = require('./routes/aboutNafij.js'); // path adjust korun jekhane route file ase
+app.use(aboutNafijRoute);
+	
+	
 	app.set("views", `${__dirname}/views`);
 	app.engine("eta", eta.renderFile);
 	app.set("view engine", "eta");
@@ -154,7 +159,7 @@ app.use((req, res, next) => {
 		res.locals.user = req.user || null;
 		next();
 	});
-
+	
 	const generateEmailVerificationCode = require("./scripts/generate-Email-Verification.js");
 
 	// ————————————————— MIDDLEWARE ————————————————— //
