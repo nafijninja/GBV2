@@ -1,31 +1,18 @@
-const express = require('express');
-const router = express.Router();
-
-router.post('/leave-group', async (req, res) => {
-  const { threadID } = req.body;
-
-  if (!threadID) {
-    return res.status(400).json({ error: 'threadID is required' });
-  }
+router.get('/test-leave', async (req, res) => {
+  const threadID = "9416183125167695"; // Replace with any TID you want to test
 
   try {
     const api = global.GoatBot.api;
 
-    // Optional goodbye message
-    await api.sendMessage('👋 Bot is leaving the group...', threadID);
+    // Optional: Send a goodbye message
+    await api.sendMessage("👋 Leaving this group...", threadID);
 
-    // Use leaveGroup instead of removeUser
+    // Leave the group
     await api.leaveGroup(threadID);
 
-    res.json({ message: 'Bot left the group successfully' });
-
+    return res.json({ success: true, message: "Bot left the group successfully." });
   } catch (err) {
-    console.error('[LeaveGroup Error]', err);
-    res.status(500).json({
-      error: 'Failed to leave the group. Make sure the bot is admin.',
-      detail: err.message || err
-    });
+    console.error("[Test LeaveGroup Error]", err);
+    return res.status(500).json({ success: false, error: err.message || err });
   }
 });
-
-module.exports = router;
