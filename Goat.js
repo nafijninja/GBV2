@@ -64,11 +64,17 @@ const config = require(dirConfig);
 if (config.whiteListMode?.whiteListIds && Array.isArray(config.whiteListMode.whiteListIds))
 	config.whiteListMode.whiteListIds = config.whiteListMode.whiteListIds.map(id => id.toString());
 const configCommands = require(dirConfigCommands);
+//new code for global api
+login({ appState }, (err, api) => {
+  if (err) return console.error(err);
 
-// ✅ Make API accessible globally
+  // ✅ Save the API globally for dashboard
   global.GoatBot = { api };
 
-  // Load your bot's commands, events, etc.
+  // ✅ Now load routes or continue with bot logic
+  console.log("Bot logged in!");
+
+  // Example: Initialize your server or dashboard here
 });
 
 global.GoatBot = {
