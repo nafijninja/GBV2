@@ -714,6 +714,7 @@ async function startBot(loginWithEmail) {
 			}
 
 			global.GoatBot.fcaApi = api;
+			global.GoatBot.api = api;
 			global.GoatBot.botID = api.getCurrentUserID();
 			log.info("LOGIN FACEBOOK", getText('login', 'loginSuccess'));
 			let hasBanned = false;
