@@ -68,14 +68,8 @@ const configCommands = require(dirConfigCommands);
 login({ appState }, (err, api) => {
   if (err) return console.error(err);
 
-  // ✅ Save the API globally for dashboard
-  global.GoatBot = { api };
-
-  // ✅ Now load routes or continue with bot logic
-  console.log("Bot logged in!");
-
-  // Example: Initialize your server or dashboard here
-});
+  // Make the API globally available after it's initialized
+global.GoatBot = { api };
 
 global.GoatBot = {
 	startTime: Date.now() - process.uptime() * 1000, // time start bot (ms)
