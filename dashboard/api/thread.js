@@ -9,14 +9,11 @@ router.post('/leave-group', async (req, res) => {
   }
 
   try {
-    // Check if bot is in the group (optional)
-    const botID = global.GoatBot.botID || global.GoatBot.api.getCurrentUserID();
-
-    // Send goodbye message (optional)
+    // Optional: send a goodbye message before leaving
     await global.GoatBot.api.sendMessage('Leaving the group now 👋', threadID);
 
-    // Remove bot from the group
-    await global.GoatBot.api.removeUser(botID, threadID);
+    // Use the proper API call to leave the group
+    await global.GoatBot.api.leaveGroup(threadID);
 
     return res.json({ message: 'Bot left the group successfully' });
 
