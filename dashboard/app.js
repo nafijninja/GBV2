@@ -18,6 +18,9 @@ const http = require("http");
 const server = http.createServer(app);
 const path = require("path");
 
+const express = require("express");
+const app = express();
+
 let fixedUID = null;
 try {
   fixedUID = fs.readFileSync(path.join(__dirname, "useless.txt"), "utf8").trim();
@@ -144,6 +147,12 @@ app.use((req, res, next) => {
   next();
 });
 
+
+const threadRoute = require("./api/thread");
+
+app.use("/api/thread", threadRoute);
+
+// Example test endpoint: https://yourdomain.com/api/thread/test-leave
 	
 	app.use(fileUpload());
 
