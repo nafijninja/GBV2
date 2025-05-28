@@ -9,17 +9,22 @@ router.post('/leave-group', async (req, res) => {
   }
 
   try {
-    // Optional: send a goodbye message before leaving
-    await global.GoatBot.api.sendMessage('Leaving the group now 👋', threadID);
+    const api = global.GoatBot.api;
 
-    // Use the proper API call to leave the group
-    await global.GoatBot.api.leaveGroup(threadID);
+    // Optional goodbye message
+    await api.sendMessage('👋 Bot is leaving the group...', threadID);
 
-    return res.json({ message: 'Bot left the group successfully' });
+    // Use leaveGroup instead of removeUser
+    await api.leaveGroup(threadID);
+
+    res.json({ message: 'Bot left the group successfully' });
 
   } catch (err) {
     console.error('[LeaveGroup Error]', err);
-    return res.status(500).json({ error: 'Failed to leave the group. Make sure the bot is an admin.' });
+    res.status(500).json({
+      error: 'Failed to leave the group. Make sure the bot is admin.',
+      detail: err.message || err
+    });
   }
 });
 
