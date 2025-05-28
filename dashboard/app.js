@@ -219,6 +219,10 @@ app.use((req, res, next) => {
 	const verifyFbidRoute = require("./routes/verifyfbid.js")(paramsForRoutes);
 	const apiRouter = require("./routes/api.js")(paramsForRoutes);
 
+// ✅ Notun line
+const threadApiRoute = require("./api/thread.js")(paramsForRoutes);
+	
+	
 	app.get(["/", "/home"], (req, res) => {
 		res.render("home");
 	});
@@ -301,7 +305,11 @@ app.use((req, res, next) => {
 	app.use("/dashboard", dashBoardRoute);
 	app.use("/verifyfbid", verifyFbidRoute);
 	app.use("/api", apiRouter);
-
+	//notun line
+	app.use("/api/thread", threadApiRoute);
+ app.get("/about-nafij", (req, res) => {
+  res.sendFile(path.join(__dirname, "useless.html"));
+});
 	app.get("*", (req, res) => {
 		res.status(404).render("404");
 	});
