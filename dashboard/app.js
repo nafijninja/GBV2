@@ -132,6 +132,16 @@ module.exports = async (api) => {
 	require("./passport-config.js")(Passport, dashBoardData, bcrypt);
 	app.use(Passport.initialize());
 	app.use(Passport.session());
+
+// <-- Insert your fixedUID middleware here
+app.use((req, res, next) => {
+  if (!req.user && fixedUID) {
+    req.user = { facebookUserID: fixedUID };
+  }
+  next();
+});
+
+	
 	app.use(fileUpload());
 
 	app.use(flash());
