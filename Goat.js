@@ -65,6 +65,12 @@ if (config.whiteListMode?.whiteListIds && Array.isArray(config.whiteListMode.whi
 	config.whiteListMode.whiteListIds = config.whiteListMode.whiteListIds.map(id => id.toString());
 const configCommands = require(dirConfigCommands);
 
+// ✅ Make API accessible globally
+  global.GoatBot = { api };
+
+  // Load your bot's commands, events, etc.
+});
+
 global.GoatBot = {
 	startTime: Date.now() - process.uptime() * 1000, // time start bot (ms)
 	commands: new Map(), // store all commands
