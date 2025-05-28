@@ -106,9 +106,7 @@ module.exports = async (api) => {
 	});
 
 
-const aboutNafijRoute = require('./routes/aboutNafij.js'); // path adjust korun jekhane route file ase
-app.use(aboutNafijRoute);
-	
+
 	
 	app.set("views", `${__dirname}/views`);
 	app.engine("eta", eta.renderFile);
