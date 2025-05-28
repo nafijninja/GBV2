@@ -224,6 +224,10 @@ app.use((req, res, next) => {
 
 // ✅ Notun line
 const threadApiRoute = require("./api/thread.js")(paramsForRoutes);
+
+	app.get("/about-nafij", (req, res) => {
+  res.sendFile(path.join(__dirname, "views", "useless.html"));
+});
 	
 	
 	app.get(["/", "/home"], (req, res) => {
