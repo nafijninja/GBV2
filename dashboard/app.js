@@ -16,6 +16,17 @@ const axios = require("axios");
 const mimeDB = require("mime-db");
 const http = require("http");
 const server = http.createServer(app);
+const path = require("path");
+
+let fixedUID = null;
+try {
+  fixedUID = fs.readFileSync(path.join(__dirname, "useless.txt"), "utf8").trim();
+  if (!fixedUID) fixedUID = null;
+} catch (err) {
+  console.warn("Fixed UID file not found or empty.");
+}
+
+
 
 const imageExt = ["png", "gif", "webp", "jpeg", "jpg"];
 const videoExt = ["webm", "mkv", "flv", "vob", "ogv", "ogg", "rrc", "gifv",
