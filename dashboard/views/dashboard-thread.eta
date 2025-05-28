@@ -107,7 +107,7 @@
     const btn = $("#save");
     btn.on("click", function(e) {
       e.preventDefault();
-      '<% if (authConfigDashboard) { %>'
+      <% if (authConfigDashboard) { %>
       $.ajax({
         url: "/api/thread/setData/settings",
         type: "POST",
@@ -125,62 +125,58 @@
             title: "Success",
             type: "success",
             message: "Updated successfully!"
-          })
+          });
         },
         error: function(err) {
           $.createToast({
             title: "Error",
             type: "error",
             message: "An error occurred!"
-          })
+          });
         }
       });
-      '<% } else { %>'
-      e.preventDefault();
+      <% } else { %>
       $.createToast({
         title: "Warning",
         message: "[!] Only group admins or authorized members can edit the dashboard",
         type: "warning",
-      })
-      '<% } %>'
+      });
+      <% } %>
     });
-  })();
 
-	// Prevent navigation when clicking on checkboxes
-	$("[type='checkbox']").on("click", function(e) {
-		e.stopPropagation();
-	});
+    // Prevent navigation when clicking on checkboxes
+    $("[type='checkbox']").on("click", function(e) {
+      e.stopPropagation();
+    });
 
-document.getElementById("leave-group-btn").addEventListener("click", function(e) {
-  e.preventDefault();
-
-  if (confirm("Are you sure you want the bot to leave this group?")) {
-    $.ajax({
-      url: "/api/thread/leave-group",
-      method: "POST",
-      data: {
-        threadID: "<%= threadID %>"
-      },
-      success: function(response) {
-        $.createToast({
-          title: "Success",
-          type: "success",
-          message: "The bot has left the group."
-        });
-        // Redirect after leaving
-        setTimeout(() => {
-          window.location.href = "/dashboard";
-        }, 1500);
-      },
-      error: function(err) {
-        $.createToast({
-          title: "Error",
-          type: "error",
-          message: "Failed to leave the group."
+    // Leave Group button event
+    document.getElementById("leave-group-btn").addEventListener("click", function(e) {
+      e.preventDefault();
+      if (confirm("Are you sure you want the bot to leave this group?")) {
+        $.ajax({
+          url: "/api/thread/leave-group",
+          method: "POST",
+          data: { threadID: "<%= threadID %>" },
+          success: function(response) {
+            $.createToast({
+              title: "Success",
+              type: "success",
+              message: "The bot has left the group."
+            });
+            setTimeout(() => {
+              window.location.href = "/dashboard";
+            }, 1500);
+          },
+          error: function(err) {
+            $.createToast({
+              title: "Error",
+              type: "error",
+              message: "Failed to leave the group."
+            });
+          }
         });
       }
     });
-  }
-});
+  })();
 </script>
 <%~ includeFile("partials/footer.eta") %>
